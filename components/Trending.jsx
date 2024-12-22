@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { ResizeMode, Video } from "expo-av";
 import * as Animatable from "react-native-animatable";
 import {
   FlatList,
   Image,
   ImageBackground,
+  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 
 import { icons } from "../constants";
+import { useVideoPlayer } from "expo-video";
 
 const zoomIn = {
   0: {
@@ -31,6 +32,13 @@ const zoomOut = {
 const TrendingItem = ({ activeItem, item }) => {
   const [play, setPlay] = useState(false);
 
+    
+  const player = useVideoPlayer(item.video, player => {
+    player.loop = true;
+    player.play();
+  });
+  
+  
   return (
     <Animatable.View
       className="mr-5"
@@ -38,17 +46,12 @@ const TrendingItem = ({ activeItem, item }) => {
       duration={500}
     >
       {play ? (
-        <Video
-          source={{ uri: item.video }}
-          className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
-          resizeMode={ResizeMode.CONTAIN}
-          useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
+        <VideoView
+          style={styles.customStyle}
+          player={player} 
+          allowsFullscreen 
+          allowsPictureInPicture 
+          nativeControls
         />
       ) : (
         <TouchableOpacity
@@ -102,3 +105,14 @@ const Trending = ({ posts }) => {
 };
 
 export default Trending;
+
+
+const styles = StyleSheet.create({
+  customStyle: {
+    width: 208, // Equivalent to w-52
+    height: 288, // Equivalent to h-72
+    borderRadius: 33, // Equivalent to rounded-[33px]
+    marginTop: 12, // Equivalent to mt-3
+    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Equivalent to bg-white/10
+  },
+});

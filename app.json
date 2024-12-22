@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "sora",
-    "slug": "sora",
-    "version": "1.0.0",
+    "name": "aora",
+    "slug": "aora",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,7 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "scheme": "sora",
+    "scheme": "aora",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true

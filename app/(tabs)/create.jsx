@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { router } from "expo-router";
-import { ResizeMode, Video } from "expo-av";
-import * as DocumentPicker from "expo-document-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
@@ -11,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
 
 import { icons } from "../../constants";
 import { createVideoPost } from "../../lib/appwrite";
@@ -28,11 +27,11 @@ const Create = () => {
   });
 
   const openPicker = async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type:
-        selectType === "image"
-          ? ["image/png", "image/jpg"]
-          : ["video/mp4", "video/gif"],
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: selectType === 'image' ?   'images' : 'videos',
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
     if (!result.canceled) {
